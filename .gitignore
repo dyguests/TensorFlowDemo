@@ -181,3 +181,4 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+/.idea/vcs.xml
