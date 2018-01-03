@@ -24,6 +24,7 @@ from __future__ import print_function
 
 import argparse
 import sys
+import ssl
 
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -33,6 +34,16 @@ FLAGS = None
 
 
 def main(_):
+    # 禁用SSL
+    try:
+        _create_unverified_https_context = ssl._create_unverified_context
+    except AttributeError:
+        # Legacy Python that doesn't verify HTTPS certificates by default
+        pass
+    else:
+        # Handle target environment that doesn't support HTTPS verification
+        ssl._create_default_https_context = _create_unverified_https_context
+
     # Import data
     mnist = input_data.read_data_sets(FLAGS.data_dir, one_hot=True)
 
